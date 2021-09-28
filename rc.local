@@ -1,2 +1,5 @@
 # start camera shutter script
 /bin/su -c "/usr/bin/python /home/pi/Pikon2021/pishutter.py" - pi 
+# script to shutdown the raspberry pi on long button hold
+/usr/bin/python /home/pi/Pikon2021/pishutdown.py
+
