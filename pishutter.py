@@ -18,15 +18,15 @@ MEDIA = '/media/pi/'
 camera = PiCamera()
 shutter_button = Button(20)
 
-def capture():
-  
-    mounted_dirs = os.listdir( MEDIA )
+mounted_dirs = os.listdir( MEDIA )
 
-    # check for a writable USB drive, use the first one found
-    if( len( mounted_dirs ) > 0 and os.access( MEDIA + mounted_dirs[0], os.W_OK ) ):
-        OUT = MEDIA + mounted_dirs[0] + '/' # write to removable drive
-    else:
-        OUT = HM # no USB drive write locally
+# check for a writable USB drive, use the first one found
+if( len( mounted_dirs ) > 0 and os.access( MEDIA + mounted_dirs[0], os.W_OK ) ):
+    OUT = MEDIA + mounted_dirs[0] + '/' # write to removable drive
+else:
+    OUT = HM # no USB drive write locally
+
+def capture():
 
     # datetime contains special characters which fail removable drive writes
     timestamp = datetime.now().strftime("%Y%m%d.%H%M%S") # strip all specials
@@ -34,6 +34,9 @@ def capture():
     filename = OUT + '%s.jpg' % timestamp 
     camera.capture( filename )
     
+
+shutter_button.when_held = camera.start_preview
+shutter_button.when_released = camera.stop_preview
 
 shutter_button.when_pressed = capture
 
