@@ -22,9 +22,9 @@ def capture():
   
     mounted_dirs = os.listdir( MEDIA )
 
-    # check for a writable USB drive
+    # check for a writable USB drive, use the first one found
     if( len( mounted_dirs ) > 0 and os.access( MEDIA + mounted_dirs[0], os.W_OK ) ):
-        OUT = MEDIA + dirs[0] # write to removable drive
+        OUT = MEDIA + mounted_dirs[0] + '/' # write to removable drive
     else:
         OUT = HM # no USB drive write locally
 
