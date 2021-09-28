@@ -1,0 +1,2 @@
+# start camera shutter script
+/bin/su -c "/usr/bin/python /home/pi/Pikon/pishutter.py" - pi 
