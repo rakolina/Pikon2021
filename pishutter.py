@@ -12,19 +12,17 @@ from picamera import PiCamera
 from datetime import datetime
 from signal import pause
 
-HM = '/home/pi/Pictures/'
+OUT = '/home/pi/Pictures/'
 MEDIA = '/media/pi/'
 
 camera = PiCamera()
 shutter_button = Button(20)
 
-mounted_dirs = os.listdir( MEDIA )
-
 # check for a writable USB drive, use the first one found
-if( len( mounted_dirs ) > 0 and os.access( MEDIA + mounted_dirs[0], os.W_OK ) ):
-    OUT = MEDIA + mounted_dirs[0] + '/' # write to removable drive
-else:
-    OUT = HM # no USB drive write locally
+if( os.path.isdir ( MEDIA ):
+    mounted_dirs = os.listdir( MEDIA )
+    if( len( mounted_dirs ) > 0 and os.access( MEDIA + mounted_dirs[0], os.W_OK ) ):
+        OUT = MEDIA + mounted_dirs[0] + '/' # write to removable drive
 
 def capture():
 
