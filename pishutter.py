@@ -19,7 +19,7 @@ camera = PiCamera()
 shutter_button = Button(20)
 
 # check for a writable USB drive, use the first one found
-if( os.path.isdir ( MEDIA ):
+if( os.path.isdir ( MEDIA ) ):
     mounted_dirs = os.listdir( MEDIA )
     if( len( mounted_dirs ) > 0 and os.access( MEDIA + mounted_dirs[0], os.W_OK ) ):
         OUT = MEDIA + mounted_dirs[0] + '/' # write to removable drive
