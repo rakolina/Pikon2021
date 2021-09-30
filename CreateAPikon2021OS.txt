@@ -67,7 +67,7 @@ lsblk -p
 # unmount
 umount /dev/sda1 && unmount /dev/sda2
 # copy Pikon ISO to laptop
-dd if=/dev/sda of=~/Pikon2021/Pikon2021ISO.img bs=32M status=progress
+dd if=/dev/sda of=~/Pikon2021/Pikon2021OS.img bs=32M status=progress
 
 git clone git@github.com:Drewsif/PiShrink.git
 
