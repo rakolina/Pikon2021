@@ -1,0 +1,80 @@
+To create an ISO from a generic Raspbian we will need:
+
+# 1. Raspberry Pi
+# 2. Generic Reaspbian OS iso
+# 3. Micro SD Card adapter 
+# 4. PC/laptop computer with usb port or SD card port
+# 5. solderless breadboard
+# 6. momentary buttons
+# 7. breadboard wires female-to-male
+
+# I used linux shell to create the ISO
+# Balena Etcher is very easy to use for flashing
+# These steps are interactive - the scripts will expect confirmation from user
+
+# Flash generic raspbian from https://www.raspberrypi.org/software/operating-systems/
+# Put the SD card in the Pi and power it on
+# In a terminal do:
+
+
+# update the generic OS to the latest
+sudo apt-mark hold wolfram-engine
+sudo apt update
+sudo apt upgrade
+sudo apt dist-upgrade
+
+# in raspi-config:
+enable SSH
+enable Pi Camera
+enable VNC server
+
+# restart
+shutdown -r now
+
+# put Pikon code and configs
+git clone git@github.com:rakolina/Pikon2021.git
+
+cd Pikon2021
+
+# in folder you will find rc.local and pishutter.py files
+
+# check pishutter.py file permissions, if necessary do
+chmod +x pishutter.py
+
+# add lines from rc.local into the system file
+sudo pico /etc/rc.local
+
+# configure static IP for the Raspberry Pi
+sudo nano /etc/dhcpcd.conf
+
+# add lines
+interface eth0
+static_ip_address=192.168.0.10/24
+static_routers=192.168.0.1
+static domain_name_servers=8.8.8.8
+
+
+# Here we have a completed image of a PikonOS2021
+# shutdown the Pi
+shutdown -h now
+
+# Remove micro SD card
+# put the SD card into a PC/laptop 
+# find the SD card in the output of a list-block command
+lsblk -p
+
+# likely /dev/sda1 and /dev/sda2
+# unmount
+umount /dev/sda1 && unmount /dev/sda2
+# copy Pikon ISO to laptop
+dd if=/dev/sda of=~/Pikon2021/Pikon2021ISO.img bs=32M status=progress
+
+git clone git@github.com:Drewsif/PiShrink.git
+
+# shrink the image
+~/Drewsif/pishrink.sh ~/Pikon2021/Pikon2021OS.img
+
+
+# The new img file is ready for writing to a new SD card
+
+ 
