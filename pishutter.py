@@ -20,15 +20,9 @@ OUT = '/home/pi/Pictures/'
 MEDIA = '/media/pi/'
 
 LOG = HM + 'pishutter.log'
-FMT = 
-logging.basicConfig(filename=LOG, encoding='utf-8',
-        format='%(asctime)s %(levelname)s %(message)s', level=logging.DEBUG)
+FMT = '%(asctime)s %(levelname)s %(message)s'
+logging.basicConfig( filename=LOG, encoding='utf-8', format=FMT, level=logging.DEBUG)
 
-logging.info( 'pishutter.py starting' )
-
-camera = PiCamera()
-shutter_button = Button( 20 )
-preview_button = Button( 21 )
 
 
 # FUNCTIONS    
@@ -69,8 +63,15 @@ def capture():
 
 # MAIN
 
+logging.info( 'pishutter.py starting' )
+
 setup_storage
 read_config
+
+
+camera = PiCamera()
+shutter_button = Button( 20 )
+preview_button = Button( 21 )
 
 preview_button.when_held = camera.start_preview
 preview_button.when_released = camera.stop_preview
