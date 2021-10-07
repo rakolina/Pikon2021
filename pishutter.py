@@ -48,6 +48,13 @@ else:
     logging.error('Fatal. Config file not found. Exit')
     exit( -1 )
 
+# TODO validate config options
+
+# update logging level based on config setting
+if( 'logging' in data and data['logging'] == 'ERROR' ):
+    print( 'loglevel error' )
+    logging.basicConfig( filename=LOG, encoding='utf-8', format=FMT, level=logging.ERROR )
+    
 
 # check for a writable USB drive, use the first one found
 if( os.path.isdir ( MEDIA ) ):
@@ -56,7 +63,7 @@ if( os.path.isdir ( MEDIA ) ):
         OUT = MEDIA + mounted_dirs[0] + '/' # write to removable drive
 logging.info( 'storage set to: ' + OUT )
 
-# TODO update logging level based on config file setting
+
 
 camera = PiCamera()
 shutter_button = Button( 20 )
