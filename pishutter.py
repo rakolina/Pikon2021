@@ -33,8 +33,6 @@ def setup_storage():
         if( len( mounted_dirs ) > 0 and os.access( MEDIA + mounted_dirs[0], os.W_OK ) ):
             OUT = MEDIA + mounted_dirs[0] + '/' # write to removable drive
 
-    logging.info( 'storage set to: ' + OUT )
-
 
 def read_config():
 
@@ -64,8 +62,10 @@ def capture():
 
 logging.info( 'pishutter.py starting' )
 
-setup_storage
 read_config
+
+setup_storage
+logging.info( 'storage set to: ' + OUT )
 
 
 camera = PiCamera()
