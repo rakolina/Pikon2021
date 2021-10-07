@@ -54,9 +54,9 @@ def capture():
     # datetime contains special characters which fail removable drive writes
     timestamp = datetime.now().strftime("%Y%m%d.%H%M%S") # strip all specials
 
-    filename = OUT + '%s.jpg' % timestamp 
-    camera.capture( filename )
-    logging.info( 'saving image: ' + filename )
+    filename = '%s.jpg' % timestamp 
+    camera.capture( OUT + filename )
+    logging.info( 'saving: ' + filename )
     
 
 # MAIN
