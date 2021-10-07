@@ -23,32 +23,9 @@ LOG = HM + 'pishutter.log'
 FMT = '%(asctime)s %(levelname)s %(message)s'
 logging.basicConfig( filename=LOG, encoding='utf-8', format=FMT, level=logging.DEBUG)
 
-# FUNCTIONS    
-
-def setup_storage():
-
-    # check for a writable USB drive, use the first one found
-    if( os.path.isdir ( MEDIA ) ):
-        mounted_dirs = os.listdir( MEDIA )
-        if( len( mounted_dirs ) > 0 and os.access( MEDIA + mounted_dirs[0], os.W_OK ) ):
-            OUT = MEDIA + mounted_dirs[0] + '/' # write to removable drive
-
-
-def read_config():
-
-    # read camera options configuration json file
-    CONF = HM + 'pishutter.conf'
-    if( os.path.isfile( CONF ) ):
-        with open(CONF, 'r') as jsonfile:
-            data = json.load(jsonfile)
-            jsonfile.close()
-    else:
-        logging.error('Fatal error. Config file not found. Exiting')
-        exit( -1 )
-
+logging.info( 'pishutter.py starting' )
 
 def capture():
-
     # datetime contains special characters which fail removable drive writes
     timestamp = datetime.now().strftime("%Y%m%d.%H%M%S") # strip all specials
 
@@ -57,16 +34,29 @@ def capture():
     logging.info( 'saving: ' + filename )
     
 
-# MAIN
+
+# MAIN 
+
+# read camera options configuration json file
+CONF = HM + 'pishutter.conf'
+if( os.path.isfile( CONF ) ):
+    with open(CONF, 'r') as jsonfile:
+        logging.info( 'config file: ' + CONF )
+        data = json.load(jsonfile)
+        jsonfile.close()
+else:
+    logging.error('Fatal. Config file not found. Exit')
+    exit( -1 )
 
 
-logging.info( 'pishutter.py starting' )
-
-read_config
-
-setup_storage
+# check for a writable USB drive, use the first one found
+if( os.path.isdir ( MEDIA ) ):
+    mounted_dirs = os.listdir( MEDIA )
+    if( len( mounted_dirs ) > 0 and os.access( MEDIA + mounted_dirs[0], os.W_OK ) ):
+        OUT = MEDIA + mounted_dirs[0] + '/' # write to removable drive
 logging.info( 'storage set to: ' + OUT )
 
+# TODO update logging level based on config file setting
 
 camera = PiCamera()
 shutter_button = Button( 20 )
@@ -78,5 +68,4 @@ preview_button.when_released = camera.stop_preview
 shutter_button.when_pressed = capture
  
 pause()
-
 
