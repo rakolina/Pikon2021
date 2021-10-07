@@ -15,7 +15,7 @@ from picamera import PiCamera
 from datetime import datetime
 from signal import pause
 
-HM='/home/pi/Pikon2021/'
+HM = '/home/pi/Pikon2021/'
 OUT = '/home/pi/Pictures/'
 MEDIA = '/media/pi/'
 
@@ -23,6 +23,23 @@ LOG = HM + 'pishutter.log'
 FMT = '%(asctime)s %(levelname)s %(message)s'
 logging.basicConfig( filename=LOG, encoding='utf-8', format=FMT, level=logging.DEBUG)
 
+
+logging.info( 'pishutter.py starting' )
+
+setup_storage
+read_config
+
+
+camera = PiCamera()
+shutter_button = Button( 20 )
+preview_button = Button( 21 )
+
+preview_button.when_held = camera.start_preview
+preview_button.when_released = camera.stop_preview
+
+shutter_button.when_pressed = capture
+ 
+pause()
 
 
 # FUNCTIONS    
@@ -62,22 +79,4 @@ def capture():
     
 
 # MAIN
-
-logging.info( 'pishutter.py starting' )
-
-setup_storage
-read_config
-
-
-camera = PiCamera()
-shutter_button = Button( 20 )
-preview_button = Button( 21 )
-
-preview_button.when_held = camera.start_preview
-preview_button.when_released = camera.stop_preview
-
-shutter_button.when_pressed = capture
- 
-pause()
-
 
