@@ -20,6 +20,7 @@ OUT = '/home/pi/Pictures/'
 MEDIA = '/media/pi/'
 
 LOG = HM + 'pishutter.log'
+FMT = 
 logging.basicConfig(filename=LOG, encoding='utf-8',
         format='%(asctime)s %(levelname)s %(message)s', level=logging.DEBUG)
 
@@ -65,6 +66,8 @@ def capture():
     camera.capture( filename )
     logging.info( 'saving image: ' + filename )
     
+
+# MAIN
 
 setup_storage
 read_config
