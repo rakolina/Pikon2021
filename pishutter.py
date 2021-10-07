@@ -39,7 +39,8 @@ def setup_storage():
         mounted_dirs = os.listdir( MEDIA )
         if( len( mounted_dirs ) > 0 and os.access( MEDIA + mounted_dirs[0], os.W_OK ) ):
             OUT = MEDIA + mounted_dirs[0] + '/' # write to removable drive
-    logging.info( 'writing pictures to ' + OUT )
+
+    logging.info( 'storage set to: ' + OUT )
 
 
 def read_config():
@@ -51,7 +52,7 @@ def read_config():
             data = json.load(jsonfile)
             jsonfile.close()
     else:
-        logger.error('Fatal error. Config file not found. Exiting')
+        logging.error('Fatal error. Config file not found. Exiting')
         exit( -1 )
 
 
@@ -62,7 +63,7 @@ def capture():
 
     filename = OUT + '%s.jpg' % timestamp 
     camera.capture( filename )
-    logging.info( 'captured a still: ' + filename )
+    logging.info( 'saving image: ' + filename )
     
 
 setup_storage
