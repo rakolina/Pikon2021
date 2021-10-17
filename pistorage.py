@@ -7,9 +7,11 @@
 import logging
 import json
 import os
+from signal import pause
 
 DESTROY = '' # do not remove originals
-HM = '/home/pi/Pictures/'
+HM = '/home/pi/Pikon2021/'
+LCL = '/home/pi/Pictures/'
 MEDIA = '/media/pi/'
 
 LOG = HM + 'pistorage.log'
@@ -50,8 +52,15 @@ if( os.path.isdir ( MEDIA ) ):
     mounted_dirs = os.listdir( MEDIA )
     if( len( mounted_dirs ) > 0 and os.access( MEDIA + mounted_dirs[0], os.W_OK ) ):
         OUT = MEDIA + mounted_dirs[0] + '/' # write to removable drive
-        args = [ '/usr/bin/rsync', '-avn', DESTROY, HM, OUT ] 
+        args = [ '/usr/bin/rsync', '-avn', DESTROY, LCL, OUT ] 
         logging.info ( 'Executing: ' + ' '.join( args ) )
         subprocess.call( args )
-else: 
-    logging.info( 'No writable media available. Exit' )
+    else: 
+        logging.critical( 'No writable media available' )
+else:
+    logging.critical( '/media/pi does not exist' )
+
+pause()
+
+
+
