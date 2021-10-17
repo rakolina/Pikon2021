@@ -17,11 +17,10 @@ from signal import pause
 
 HM = '/home/pi/Pikon2021/'
 OUT = '/home/pi/Pictures/'
-MEDIA = '/media/pi/'
 
 LOG = HM + 'pishutter.log'
 FMT = '%(asctime)s %(levelname)s %(message)s'
-logging.basicConfig( filename=LOG, encoding='utf-8', format=FMT, level=logging.DEBUG)
+logging.basicConfig( filename=LOG, encoding='utf-8', format=FMT, level=logging.CRITICAL)
 
 logging.info( 'pishutter.py starting' )
 
@@ -51,19 +50,15 @@ else:
 # TODO validate config options
 
 # update logging level based on config setting
-if( 'logging' in data and data['logging'] == 'ERROR' ):
-    print( 'loglevel error' )
-    logging.basicConfig( filename=LOG, encoding='utf-8', format=FMT, level=logging.ERROR )
-    
-
-# check for a writable USB drive, use the first one found
-if( os.path.isdir ( MEDIA ) ):
-    mounted_dirs = os.listdir( MEDIA )
-    if( len( mounted_dirs ) > 0 and os.access( MEDIA + mounted_dirs[0], os.W_OK ) ):
-        OUT = MEDIA + mounted_dirs[0] + '/' # write to removable drive
-logging.info( 'storage set to: ' + OUT )
-
-
+if( 'logging' in data ):
+    if( data['logging'] == 'error' ):
+        logging.basicConfid( level = logging.ERROR )
+    elif( data['logging'] == 'warning' ):
+        logging.basicConfid( level = logging.WARNING )
+    elif( data['logging'] == 'info' ):
+        logging.basicConfid( level = logging.INFO )
+    elif( data['logging'] == 'debug' ):
+        logging.basicConfid( level = logging.DEBUG )
 
 camera = PiCamera()
 shutter_button = Button( 20 )
