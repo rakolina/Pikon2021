@@ -6,7 +6,6 @@
 # {timestamp}.jpg and save it in /home/pi
 # or on a removable USB drive if available
 
-import logging
 import json
 import os
 
@@ -17,12 +16,7 @@ from signal import pause
 
 HM = '/home/pi/Pikon2021/'
 OUT = '/home/pi/Pictures/'
-
-LOG = HM + 'pishutter.log'
-FMT = '%(asctime)s %(levelname)s %(message)s'
-logging.basicConfig( filename=LOG, encoding='utf-8', format=FMT, level=logging.CRITICAL)
-
-logging.info( 'pishutter.py starting' )
+DEBUG = 1
 
 def capture():
     # datetime contains special characters which fail removable drive writes
@@ -30,35 +24,25 @@ def capture():
 
     filename = '%s.jpg' % timestamp 
     camera.capture( OUT + filename )
-    logging.info( 'saving: ' + filename )
+    if ( 1 == DEBUG ):
+        print ( 'saving: ' + filename )
     
 
-
-# MAIN 
-
 # read camera options configuration json file
-CONF = HM + 'pishutter.conf'
+CONF = HM + 'pikon.conf'
 if( os.path.isfile( CONF ) ):
-    with open(CONF, 'r') as jsonfile:
-        logging.info( 'config file: ' + CONF )
+    with open( CONF, 'r' ) as jsonfile:
+        if ( 1 == DEBUG ):
+            print ( 'config file: ' + CONF )
         data = json.load(jsonfile)
         jsonfile.close()
 else:
-    logging.error('Fatal. Config file not found. Exit')
+    if ( 1 == DEBUG ):
+        print ('Fatal. Config file not found. Exit')
     exit( -1 )
 
 # TODO validate config options
 
-# update logging level based on config setting
-if( 'logging' in data ):
-    if( data['logging'] == 'error' ):
-        logging.basicConfid( level = logging.ERROR )
-    elif( data['logging'] == 'warning' ):
-        logging.basicConfid( level = logging.WARNING )
-    elif( data['logging'] == 'info' ):
-        logging.basicConfid( level = logging.INFO )
-    elif( data['logging'] == 'debug' ):
-        logging.basicConfid( level = logging.DEBUG )
 
 camera = PiCamera()
 shutter_button = Button( 20 )
