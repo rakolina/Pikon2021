@@ -16,7 +16,7 @@ DESTROY = ''
 DEBUG = 1
 
 # read options json file
-CONF = HM + 'pishutter.conf'
+CONF = HM + 'pistorage.conf'
 if( os.path.isfile( CONF ) ):
     with open( CONF, 'r' ) as jsonfile:
         if ( 1 == DEBUG ):
@@ -24,7 +24,7 @@ if( os.path.isfile( CONF ) ):
         data = json.load(jsonfile)
         jsonfile.close()
 else:
-    f ( 1 == DEBUG ):
+    if ( 1 == DEBUG ):
         print ('Fatal. Config file not found. Exit')
     exit( -1 )
 
@@ -42,9 +42,9 @@ while True:
             subprocess.call( args )
         else: 
             if ( 1 == DEBUG ):
-                print ( 'No writable media available' )
+                print ( 'remote media is not writable' )
     else:
         if ( 1 == DEBUG ):
-            print ( OUT + ' does not exist' )
+            print ( 'remote media does not exist' )
 
-    time.pause( 5 )
+    time.sleep( 5 ) # seconds
