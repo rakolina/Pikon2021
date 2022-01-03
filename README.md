@@ -12,7 +12,8 @@ To configure static IP on the Pi we need to edit dhcpcd.conf file and wpa suppil
 Web UI to configure the pi camera options resides in default lighttpd directory: /var/www/html
 
 
-The libcamera stack introduction to Raspberry Pi calls for a clean split between libcamera and legacy support.
+The libcamera stack introduction to Raspberry Pi calls for a clean split between libcamera and legacy support in our project.
+
 https://www.raspberrypi.com/documentation/accessories/camera.html
 
 # Pikon V2
