@@ -26,7 +26,7 @@ I. Image formats:
 5. YUV420, 
 6. RGB888
 
-II. Max exposure (seconds)a: 230
+II. Max exposure (seconds): 230
 
 III. Exposure modes:
 1. normal, 
