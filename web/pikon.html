@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Pikon Configurator</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="pikon-style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+	<?php include ("pikon.php"); ?>
+
+    <h2>Pi Camera Configurator</h2>
+    <form>
+        Image Encoding:
+        <input name="encoding" type="radio" value="jpeg"> JPEG
+        <input name="encoding" type="radio" value="dng"> DNG
+        <br>
+        <br>
+
+        ISO (1 - 800):
+        <input name="iso" type="text" value="">
+        <br>
+        <br>
+
+        Shutter speed (s) (0.000001 - 6):
+        <input name="shutter speed seconds" type="text" value="">
+        <br>
+        <br>
+
+        <input name="submit" type="submit" value="Save">
+        <br>
+        <br>
+
+    </form>
+
+</body>
+</html>
+
