@@ -9,7 +9,9 @@ import json
 import os
 from signal import pause
 
-DESTROY = '' # do not remove originals
+MODE = '' # do not remove originals unless config file specifically says so
+DESTROY = '--remove-source-files'
+
 HM = '/home/pi/Pikon2021/'
 LCL = '/home/pi/Pictures/'
 MEDIA = '/media/pi/'
@@ -44,23 +46,24 @@ if( 'logging' in data ):
         logging.basicConfid( level = logging.DEBUG )
 
 if( 'mode' in data and data['mode'] == 'destroy' ):
-    DESTROY = '--remove-source-files'
+    MODE = DESTROY
 
 
 # check for a writable USB drive, use the first one found
-if( os.path.isdir ( MEDIA ) ):
-    mounted_dirs = os.listdir( MEDIA )
-    if( len( mounted_dirs ) > 0 and os.access( MEDIA + mounted_dirs[0], os.W_OK ) ):
-        OUT = MEDIA + mounted_dirs[0] + '/' # write to removable drive
-        args = [ '/usr/bin/rsync', '-avn', DESTROY, LCL, OUT ] 
-        logging.info ( 'Executing: ' + ' '.join( args ) )
-        subprocess.call( args )
-    else: 
-        logging.critical( 'No writable media available' )
-else:
-    logging.critical( '/media/pi does not exist' )
-
-pause()
+while( true ):
+    if( os.path.isdir ( MEDIA ) ):
+        mounted_dirs = os.listdir( MEDIA )
+        if( len( mounted_dirs ) > 0 and os.access( MEDIA + mounted_dirs[0], os.W_OK ) ):
+            OUT = MEDIA + mounted_dirs[0] + '/' # write to removable drive
+            args = [ '/usr/bin/rsync', '-av', MODE, LCL, OUT ] 
+            logging.info ( 'Executing: ' + ' '.join( args ) )
+            subprocess.call( args )
+            logging.info( 'Completed moving files onto removable drive ' + OUT )
+        else: 
+            logging.critical( 'No writable media available' )
+    else:
+        sleep( 3000 ) # TODO verify time unit, sleep for 3 seconds
+    
 
 
 

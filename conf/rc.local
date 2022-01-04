@@ -20,7 +20,7 @@ fi
 # start camera shutter script
 /bin/su -c "/usr/bin/python /home/pi/Pikon2021/pishutter.py" - pi
 
-# when USB stick shows up copy images
+# when USB stick shows up copy or move images
 /bin/su -c "/usr/bin/python /home/pi/Pikon2021/pistorage.py" - pi
 
 exit 0
