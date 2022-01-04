@@ -4,7 +4,6 @@
 # when pressed, get current date 
 # and create a new photo image, name it 
 # {timestamp}.jpg and save it in /home/pi
-# or on a removable USB drive if available
 
 import json
 import os
@@ -15,6 +14,7 @@ from datetime import datetime
 from signal import pause
 
 HM = '/home/pi/Pikon2021/'
+CONF = HM + 'conf/pikon.v1.conf'
 OUT = '/home/pi/Pictures/'
 DEBUG = 1
 
@@ -29,16 +29,12 @@ def capture():
     
 
 # read camera options configuration json file
-CONF = HM + 'pikon.conf'
 if( os.path.isfile( CONF ) ):
     with open( CONF, 'r' ) as jsonfile:
-        if ( 1 == DEBUG ):
-            print ( 'config file: ' + CONF )
         data = json.load(jsonfile)
         jsonfile.close()
 else:
-    if ( 1 == DEBUG ):
-        print ('Fatal. Config file not found. Exit')
+    print ('Fatal. Config file not found. Exit')
     exit( -1 )
 
 # TODO validate config options
