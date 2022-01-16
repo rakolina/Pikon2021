@@ -12,18 +12,18 @@
     <h2>Pi Camera Configurator</h2>
     <form action="/save" method="post">
         Image Encoding:
-        <input name="encoding" type="radio" value="jpeg"> JPEG
-        <input name="encoding" type="radio" value="dng"> DNG
+        <input id="jpeg" name="encoding" type="radio" value="jpeg"> JPEG
+        <input id="dng" name="encoding" type="radio" value="dng"> DNG
         <br>
         <br>
 
-        ISO (1 - 800):
-        <input name="iso" type="text" value="">
+        ISO (0 - 800):
+        <input id="iso" name="iso" type="number" min="0" max="800" step="100" value="">
         <br>
         <br>
 
-        Shutter speed (s) (0.000001 - 6):
-        <input name="shutter speed seconds" type="text" value="">
+        Shutter speed (s) (0 - 10):
+        <input id="shutter" name="shutter speed seconds" type="number" min="0" max="10" step="0.000001" value="">
         <br>
         <br>
 
@@ -33,6 +33,19 @@
 
     </form>
 
+    <script>
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.open("GET", "pikon.conf", true);
+      xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState === XMLHttpRequest.DONE && xmlhttp.status === 200) {
+          var conf = JSON.parse(this.responseText);
+          document.getElementById(conf.image_format).checked = true;
+          document.getElementById("iso").value = conf.iso;
+          document.getElementById("shutter").value = conf.shutter_speed;
+        }
+      };
+      xmlhttp.send();
+    </script>
 </body>
 </html>
 
