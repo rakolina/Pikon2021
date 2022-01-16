@@ -1,0 +1,19 @@
+#!/bin/bash
+
+#/etc/init.d/pikon
+export PATH=$PATH:/usr/local/bin
+export NODE_PATH=$NODE_PATH:/usr/local/lib/node_modules
+
+case "$1" in
+start)
+exec forever --sourceDir=/usr/local/bin/server -p /usr/local/bin/server /home/pi/Pikon2021/web/app.js
+;;
+stop)
+exec forever stop --sourceDir=/usr/local/bin/server /home/pi/Pikon2021/web/app.js
+;;
+*)
+echo "Usage: /etc/init.d/pikon {start|stop}"
+exit 1
+;;
+esac
+exit 0
