@@ -6,9 +6,13 @@ const fs = require('fs');
 const hostname = '127.0.0.1';
 const port = 3000;
 
+const hm = '/home/pi/Pikon2021/web/';
+const infile = hm + 'pikon.html';
+const outfile = hm + 'pikon.conf';
+
 const getHtml = () => {
   try {
-    return fs.readFileSync('pikon.html', 'utf8');
+    return fs.readFileSync(infile, 'utf8');
   } catch (err) {
     console.error(err);
   } finally {
@@ -35,7 +39,7 @@ const saveConfig = (buffer) => {
     shutter_speed: params['shutter speed seconds'],
   };
   console.log(`New config: ${JSON.stringify(config)}`);
-  fs.writeFile('pikon.conf', JSON.stringify(config), (err) => {
+  fs.writeFile(outfile, JSON.stringify(config), (err) => {
     err ? console.error(err) : console.log('Configuration file saved');
   });
   return config;
