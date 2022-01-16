@@ -76,5 +76,13 @@ git clone git@github.com:Drewsif/PiShrink.git
 
 
 # The new img file is ready for writing to a new SD card
+-----------------------------------------------------
+Installing node.js
 
+sudo apt install nodejs
+
+> node -v
+> v10.19.0
+>
+>
  
