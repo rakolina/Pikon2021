@@ -35,10 +35,10 @@
 
     <script>
       var xmlhttp = new XMLHttpRequest();
-      xmlhttp.open("GET", "pikon.conf", true);
+      xmlhttp.open("GET", "/config", true);
       xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState === XMLHttpRequest.DONE && xmlhttp.status === 200) {
-          var conf = JSON.parse(this.responseText);
+          var conf = JSON.parse(xmlhttp.responseText);
           document.getElementById(conf.image_format).checked = true;
           document.getElementById("iso").value = conf.iso;
           document.getElementById("shutter").value = conf.shutter_speed;

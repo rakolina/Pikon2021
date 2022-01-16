@@ -6,9 +6,9 @@ const fs = require('fs');
 const hostname = '127.0.0.1';
 const port = 3000;
 
-const hm = '/home/pi/Pikon2021/web/';
-const infile = hm + 'pikon.html';
-const outfile = hm + 'pikon.conf';
+const hm = '/home/pi/Pikon2021/';
+const infile = hm + 'web/pikon.html';
+const outfile = hm + 'conf/pikon.conf';
 
 const getHtml = () => {
   try {
@@ -17,6 +17,17 @@ const getHtml = () => {
     console.error(err);
   } finally {
     console.log('html loading is done');
+  }
+};
+
+
+const getConfig = () => {
+  try {
+    return fs.readFileSync(outfile, 'utf8');
+  } catch (err) {
+    console.error(err);
+  } finally {
+    console.log('config loading is done');
   }
 };
 
@@ -61,6 +72,11 @@ const save = (req, res) => {
   });
 };
 
+const config = (req, res) => {
+  res.writeHeader(200, {'Content-Type': 'application/json'});
+  res.end(getConfig());
+};
+
 const server = http.createServer((req, res) => {
   console.log(req.url);
   switch (req.url) {
@@ -70,6 +86,8 @@ const server = http.createServer((req, res) => {
     case '/save':
       save(req, res);
       break;
+    case '/config':
+      config(req, res);
     default:
       homePage(req, res);
   };
