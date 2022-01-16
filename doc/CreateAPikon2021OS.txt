@@ -85,6 +85,4 @@ sudo apt install nodejs
 > v10.19.0
 
 Run node js as a service:
-sudo apt install upstart
-
 https://www.instructables.com/Nodejs-App-As-a-RPI-Service-boot-at-Startup/ 
