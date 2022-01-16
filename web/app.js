@@ -45,9 +45,9 @@ const getParams = (buffer) => {
 const saveConfig = (buffer) => {
   const params = getParams(buffer);
   const config = {
-    image_format: params.encoding,
+    format: params.format,
     iso: params.iso,
-    shutter_speed: params['shutter speed seconds'],
+    shutter: params.shutter,
   };
   console.log(`New config: ${JSON.stringify(config)}`);
   fs.writeFile(outfile, JSON.stringify(config), (err) => {
