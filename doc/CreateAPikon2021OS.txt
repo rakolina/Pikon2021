@@ -88,4 +88,3 @@ Run node js as a service:
 sudo apt install upstart
 
 https://www.instructables.com/Nodejs-App-As-a-RPI-Service-boot-at-Startup/ 
-https://serverfault.com/questions/363654/run-a-node-js-app-with-lighttpd
