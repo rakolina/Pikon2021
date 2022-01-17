@@ -92,3 +92,11 @@ sh /etc/init.d/pikon start/stop
 update-rc.d pikon defaults
 
 https://www.instructables.com/Nodejs-App-As-a-RPI-Service-boot-at-Startup/ 
+
+
+=============================================================
+headless buster
+install lite version
+place empty file called ssh in /boot partition
+place wifi config file wpa_supplicant.conf in /boot
+
