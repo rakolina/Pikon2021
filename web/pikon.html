@@ -15,9 +15,10 @@
 <body>
     <h2>Pi Camera Configurator</h2>
     <form action="/save" method="post">
+        
         Image Encoding:
         <input id="jpeg" name="format" type="radio" value="jpeg"> JPEG
-        <input id="dng" name="format" type="radio" value="dng"> DNG
+        <input id="dng" name="format" type="radio" value="dng"> JPEG+RAW
         <br>
         <br>
 
@@ -26,7 +27,7 @@
         <br>
         <br>
 
-        Shutter speed (s) (0 - 10):
+        Shutter Speed (s):
         <input id="shutter" name="shutter" type="number" min="0" max="10" step="0.000001" value="">
         <br>
         <br>
