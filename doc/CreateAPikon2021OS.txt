@@ -84,7 +84,12 @@ sudo apt install nodejs
 > node -v
 > v10.19.0
 
-Created a service shell script called pikon
+Install npm
+sudo apt install npm
+https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-20-04
+
+
+Create a service shell script called pikon
 
 Run node js as a service:
 chmod 755 /etc/init.d/pikon
