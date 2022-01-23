@@ -42,10 +42,10 @@ cd Pikon2021
 chmod +x pishutter.py
 
 # add lines from rc.local into the system file
-sudo pico /etc/rc.local
+sudo vim /etc/rc.local
 
 # configure static IP for the Raspberry Pi
-sudo nano /etc/dhcpcd.conf
+sudo vim /etc/dhcpcd.conf
 
 # add lines
 interface eth0
@@ -77,6 +77,11 @@ git clone git@github.com:Drewsif/PiShrink.git
 
 # The new img file is ready for writing to a new SD card
 -----------------------------------------------------
+
+Place an empty file called ssh in the boot partition
+Place a wpa_supplicant file in the boot partition
+
+
 Installing node.js
 
 sudo apt install nodejs
