@@ -1,21 +1,3 @@
-To create an ISO from a generic Raspbian we will need:
-
-# 1. Raspberry Pi
-# 2. Generic Reaspbian OS iso
-# 3. Micro SD Card adapter 
-# 4. PC/laptop computer with usb port or SD card port
-# 5. solderless breadboard
-# 6. momentary buttons
-# 7. breadboard wires female-to-male
-
-# I used linux shell to create the ISO
-# Balena Etcher is very easy to use for flashing
-# These steps are interactive - the scripts will expect confirmation from user
-
-# Flash generic raspbian from https://www.raspberrypi.org/software/operating-systems/
-# Put the SD card in the Pi and power it on
-# In a terminal do:
-
 
 # update the generic OS to the latest
 sudo apt-mark hold wolfram-engine
@@ -23,64 +5,28 @@ sudo apt update
 sudo apt upgrade
 sudo apt dist-upgrade
 
-# in raspi-config:
-enable SSH
+# in raspi-config
 enable Pi Camera
-enable VNC server
+setup locale, keyboard, timezone
 
-# restart
-shutdown -r now
+Encryption:
+ ssh-keygen -t ed25519 -C "email@example.com"
+ eval "$(ssh-agent -s)"
+ ssh-add ~/.ssh/id_ed25519
 
-# put Pikon code and configs
+sudo apt install git vim tree
+
 git clone git@github.com:rakolina/Pikon2021.git
 
-cd Pikon2021
-
 # in folder you will find rc.local and pishutter.py files
-
-# check pishutter.py file permissions, if necessary do
-chmod +x pishutter.py
 
 # add lines from rc.local into the system file
 sudo vim /etc/rc.local
 
-# configure static IP for the Raspberry Pi
-sudo vim /etc/dhcpcd.conf
-
-# add lines
-interface eth0
-static_ip_address=192.168.0.10/24
-static_routers=192.168.0.1
-static domain_name_servers=8.8.8.8
-
-
-# Here we have a completed image of a PikonOS2021
-# shutdown the Pi
-shutdown -h now
-
-# Remove micro SD card
-# put the SD card into a PC/laptop 
-# find the SD card in the output of a list-block command
-lsblk -p
-
-# likely /dev/sda1 and /dev/sda2
-# unmount
-umount /dev/sda1 && unmount /dev/sda2
-# copy Pikon ISO to laptop
-dd if=/dev/sda of=~/Pikon2021/Pikon2021OS.img bs=32M status=progress
-
-git clone git@github.com:Drewsif/PiShrink.git
-
-# shrink the image
-~/Drewsif/pishrink.sh ~/Pikon2021/Pikon2021OS.img
-
-
-# The new img file is ready for writing to a new SD card
------------------------------------------------------
-
 Place an empty file called ssh in the boot partition
-Place a wpa_supplicant file in the boot partition
 
+Install RaspAP
+curl -sL https://install.raspap.com | bash
 
 Installing node.js
 
@@ -89,12 +35,7 @@ sudo apt install nodejs
 > node -v
 > v10.19.0
 
-Install npm
-sudo apt install npm
-https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-20-04
-
-
-Create a service shell script called pikon
+Create a service shell script called pikon-service
 
 Run node js as a service:
 chmod 755 /etc/init.d/pikon
@@ -104,31 +45,16 @@ update-rc.d pikon defaults
 https://www.instructables.com/Nodejs-App-As-a-RPI-Service-boot-at-Startup/ 
 
 
-=============================================================
-headless buster
-install lite version
-place empty file called ssh in /boot partition
-place wifi config file wpa_supplicant.conf in /boot
-
 turn off bluetooth:
   sudo systemctl stop hciuart
   sudo systemctl disable hciuart
 
-Set timezone:
- sudo dpkg-reconfigure tzdata
 
-Set keyboard:
- TBD
+----------------------------------------------------
+# shrink the image
+git clone git@github.com:Drewsif/PiShrink.git
+~/Drewsif/pishrink.sh ~/Pikon2021/Pikon2021OS.img
 
-Encryption:
- ssh-keygen -t ed25519 -C "email@example.com"
- eval "$(ssh-agent -s)"
- ssh-add ~/.ssh/id_ed25519
 
-Install git
-Install tree
-Install vim
-
-Checkout pikon sources in ~/pi:
- git clone git@github.com:rakolina/Pikon2021.git
-
+# The new img file is ready for writing to a new SD card
+-----------------------------------------------------
