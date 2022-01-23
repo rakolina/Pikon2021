@@ -3,7 +3,8 @@
 const http = require('http');
 const fs = require('fs');
 
-const hostname = '127.0.0.1';
+//const hostname = '127.0.0.1';
+const hostname = '10.3.141.1';
 const port = 3000;
 
 const hm = '/home/pi/Pikon2021/';
