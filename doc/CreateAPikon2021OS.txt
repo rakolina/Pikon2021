@@ -18,7 +18,7 @@ Encryption:
  eval "$(ssh-agent -s)"
  ssh-add ~/.ssh/id_ed25519
 
-sudo apt install git vim tree
+sudo apt install git vim tree python3-gpiozero python-gpiozero python3-gpiozero python-picamera python3-picamera nodejs
 
 git clone git@github.com:rakolina/Pikon2021.git
 
