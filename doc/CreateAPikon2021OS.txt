@@ -1,3 +1,7 @@
+After flashing a generic raspbian:
+Place an empty file called ssh in the boot partition
+
+-----------------------------------------------------
 
 # update the generic OS to the latest
 sudo apt-mark hold wolfram-engine
@@ -22,8 +26,6 @@ git clone git@github.com:rakolina/Pikon2021.git
 
 # add lines from rc.local into the system file
 sudo vim /etc/rc.local
-
-Place an empty file called ssh in the boot partition
 
 Install RaspAP
 curl -sL https://install.raspap.com | bash
