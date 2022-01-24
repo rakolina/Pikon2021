@@ -1,11 +1,10 @@
-This may become a pikon2021.deb when I figure out how to write a debian installer
+This is to become a pikon2021.deb when I figure out how to write a debian installer
 ====================================================
 
 After flashing a generic raspbian:
 Place an empty file called ssh in the boot partition
 
 -----------------------------------------------------
-
 # update the generic OS to the latest
 sudo apt-mark hold wolfram-engine
 sudo apt update
@@ -22,34 +21,47 @@ Encryption:
  ssh-add ~/.ssh/id_ed25519
 
 ===================================================
+# Libraries
 sudo apt install git vim tree python3-gpiozero python-gpiozero python3-gpiozero python-picamera python3-picamera nodejs
 
 Install RaspAP
 curl -sL https://install.raspap.com | bash
 ===================================================
-
+# PikOS
 git clone git@github.com:rakolina/Pikon2021.git
 
 # add lines from rc.local into the system file
 diff /home/pi/Pikon2021/conf/rc.local /etc/rc.local
 sudo rsync -a /home/pi/Pikon2021/conf/rc.local /etc/rc.local
 
+# Add pikon-service to /etc/init.d folder
+
 Run node js as a service:
 chmod 755 /etc/init.d/pikon-service
 sh /etc/init.d/pikon-service start/stop
 update-rc.d pikon defaults
 
-Optional to save batteriy:
+Save RPi battery:
 turn off bluetooth:
   sudo systemctl stop hciuart
   sudo systemctl disable hciuart
 
 
 ----------------------------------------------------
+# Clone iso image
+sudo dd if=/dev/sdx of=~/PikOS.1.0.img bs=32M status=progress
+
+# Clone with compress:
+sudo dd if=/dev/sdx | gzip -c > ~/PikOS.1.0.img.gz
+
 # shrink the image
 git clone git@github.com:Drewsif/PiShrink.git
 ~/Drewsif/pishrink.sh ~/Pikon2021/Pikon2021OS.img
 
-
 # The new img file is ready for writing to a new SD card
 -----------------------------------------------------
+# Restore
+dd if=~/PikOS.1.0.img of=/dev/sdx
+
+# Restore compressed
+gzip -dc ~/PikOS.1.0.img.gz | dd of=/dev/sdx
