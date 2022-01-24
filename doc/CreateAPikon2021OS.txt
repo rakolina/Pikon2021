@@ -1,3 +1,6 @@
+This may become a pikon2021.deb when I figure out how to write a debian installer
+====================================================
+
 After flashing a generic raspbian:
 Place an empty file called ssh in the boot partition
 
@@ -18,35 +21,25 @@ Encryption:
  eval "$(ssh-agent -s)"
  ssh-add ~/.ssh/id_ed25519
 
+===================================================
 sudo apt install git vim tree python3-gpiozero python-gpiozero python3-gpiozero python-picamera python3-picamera nodejs
-
-git clone git@github.com:rakolina/Pikon2021.git
-
-# in folder you will find rc.local and pishutter.py files
-
-# add lines from rc.local into the system file
-sudo vim /etc/rc.local
 
 Install RaspAP
 curl -sL https://install.raspap.com | bash
+===================================================
 
-Installing node.js
+git clone git@github.com:rakolina/Pikon2021.git
 
-sudo apt install nodejs
-
-> node -v
-> v10.19.0
-
-Create a service shell script called pikon-service
+# add lines from rc.local into the system file
+diff /home/pi/Pikon2021/conf/rc.local /etc/rc.local
+sudo rsync -a /home/pi/Pikon2021/conf/rc.local /etc/rc.local
 
 Run node js as a service:
-chmod 755 /etc/init.d/pikon
-sh /etc/init.d/pikon start/stop
+chmod 755 /etc/init.d/pikon-service
+sh /etc/init.d/pikon-service start/stop
 update-rc.d pikon defaults
 
-https://www.instructables.com/Nodejs-App-As-a-RPI-Service-boot-at-Startup/ 
-
-
+Optional to save batteriy:
 turn off bluetooth:
   sudo systemctl stop hciuart
   sudo systemctl disable hciuart
