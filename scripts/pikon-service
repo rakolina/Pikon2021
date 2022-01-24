@@ -12,7 +12,7 @@ stop)
 exec forever stop --sourceDir=/usr/local/bin/server /home/pi/Pikon2021/web/app.js
 ;;
 *)
-echo "Usage: /etc/init.d/pikon {start|stop}"
+echo "Usage: /etc/init.d/pikon-service {start|stop}"
 exit 1
 ;;
 esac
