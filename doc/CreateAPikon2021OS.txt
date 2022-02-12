@@ -24,8 +24,10 @@ Encryption:
 # Libraries
 sudo apt install git vim tree python3-gpiozero python-gpiozero python3-gpiozero python-picamera python3-picamera nodejs
 
-Install RaspAP
-curl -sL https://install.raspap.com | bash
+
+Configure access point
+https://raspberrypi-guide.github.io/networking/create-wireless-access-point
+
 ===================================================
 # PikOS
 git clone git@github.com:rakolina/Pikon2021.git
